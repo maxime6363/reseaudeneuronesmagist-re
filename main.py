@@ -11,4 +11,3 @@ class Reseau2neurone :
     def backward_propagation(self):
         pass
 
-
