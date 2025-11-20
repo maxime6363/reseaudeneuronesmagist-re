@@ -12,3 +12,9 @@ class Reseau2neurone :
     def backward_propagation(self):
         pass
 
+#nb de neurones par couche. NB couche  nb neurone. Prend en entrée matrice numpy avec taille paramétrable.
+#reseau avec couche d'entrée de la taille de l'image. Paramètre blablabla puis sortie
+#fonction d'activation --> si valeur du neurone supérieure à 0 alors renvoie 1, sinon on renvoie -1
+#on prend tous neurones d'entrée et on multiplie par les poids, on obtiens veceur de resultat pour couche en cours,
+#on le place dans fonction d'activation, puis on recommence à avancer avec les valeurs données par les focntions d'activation
+#paramètres : taille de l'image
