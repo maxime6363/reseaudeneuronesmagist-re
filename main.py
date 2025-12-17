@@ -9,6 +9,7 @@ class Reseau2neurone :
         self.reseau = {}
         self.taille_image = taille_image
         self.activation={} #dictionnaire des valeurs prises par chaque neurone de chaque couche
+        self.sommesintermediaires={}
         for couche in range(self.nb_couche):
             self.reseau[couche] = np.full((neurones_couche[couche]+1,neurones_couche[couche+1]),valeur_poids_init)
             self.reseau[couche][neurones_couche[couche],:]=1
@@ -22,14 +23,6 @@ class Reseau2neurone :
         for couche in range(self.nb_couche):
             activation_avec_biais=np.append(self.activation[couche],1) #on veut prendre en compte le biais donc on crée un vecteur des valeurs précédentes en y ajoutant le biais
             self.activation[couche+1]=np.dot(activation_avec_biais,self.reseau[couche]) #on fait le produit matriciel
+            self.sommesintermediaires[couche]=self.activation[couche+1]
             self.activation[couche+1]=np.where(self.activation[couche+1]>0,1,-1) #dans le dictionnaire des activations on remplace par 1 les neurones à valeur>0, -1 sinon
-
-    def backward_propagation(self):
-        pass
-
-#nb de neurones par couche. NB couche  nb neurone. Prend en entrée matrice numpy avec taille paramétrable.
-#reseau avec couche d'entrée de la taille de l'image. Paramètre blablabla puis sortie
-#fonction d'activation --> si valeur du neurone supérieure à 0 alors renvoie 1, sinon on renvoie -1
-#on prend tous neurones d'entrée et on multiplie par les poids, on obtiens veceur de resultat pour couche en cours,
-#on le place dans fonction d'activation, puis on recommence à avancer avec les valeurs données par les focntions d'activation
-#paramètres : taille de l'image
+            self.activation[couche+1].pop(-1) #on enlève le biais de la liste des neurones de la couche apres activation
