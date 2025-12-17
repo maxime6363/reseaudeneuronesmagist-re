@@ -46,3 +46,23 @@ class Reseau2neurone :
         erreurs={}
         nombre_matrices_poids=self.nb_couche -1
         erreurs[nombre_matrices_poids]=2*(sortie-cible)*derivee_sigmoide(sortie)
+        for couche in range(nombre_matrices_poids-1,-1,-1):
+            derivee=derivee_sigmoide(self.activation[couche+1])
+            poids_suivants=self.reseau_poids[couche+1][:-1,:] #on ne prend pas en compte le biais
+            somme=np.dot(erreurs[couche+1],poids_suivants.T)
+            erreurs[couche]=derivee*somme
+        for couche in range(self.nb_couche):
+            activation_avec_biais=np.append(self.activation[couche], 1)
+            n = len(activation_avec_biais)
+            m = len(erreurs[couche])
+            gradient = np.zeros((n, m))
+            for i in range(n):
+                for j in range(m):
+                    gradient[i, j] = activation_avec_biais[i] * erreurs[couche][j]
+            self.gradients[couche] = gradient
+        return self.gradients
+
+    def mettre_a_jour_poids(self):
+        for couche in range(self.nb_couche):
+            self.reseau_poids[couche] -= self.taux_apprentissage * self.gradients[couche]
+
