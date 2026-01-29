@@ -87,8 +87,7 @@ def show_images(images, title_texts):
 
 
 
-# if __name__=="__main__":
-if True:
+if __name__=="__main__":
 
     mnist_dataloader = MnistDataloader()
     (x_train, y_train), (x_test, y_test) = mnist_dataloader.load_data()
